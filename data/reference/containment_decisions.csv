@@ -1,0 +1,4 @@
+trigger,action,impact,approval_policy
+Malware Detection,Isolate device,High impact,Human confirmation required
+Critical suspicious network activity,Block network,High impact,Human confirmation required
+Privilege escalation,Escalate incident,High impact,Human confirmation required

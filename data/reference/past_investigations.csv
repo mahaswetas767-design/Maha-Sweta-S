@@ -1,0 +1,4 @@
+investigation_id,scenario,severity,containment_decision,evidence_summary
+HIST-001,Repeated Failed Login,High,Escalated,Authentication evidence + source IP review
+HIST-002,Malware Detection,Critical,Device isolated after human approval,EDR evidence + network review
+HIST-003,Abnormal Medical Device Network Activity,High,Escalated,Protocol and destination verification

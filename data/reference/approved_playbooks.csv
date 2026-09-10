@@ -1,0 +1,4 @@
+playbook_id,scenario,step_1,step_2,step_3,step_4,step_5,step_6
+PLAYBOOK-001,Repeated Failed Login,Verify affected account,Check failed login count,Check source IP,Collect authentication evidence,Assess severity,Escalate if suspicious
+PLAYBOOK-002,Malware Detection,Identify affected device,Verify malware indicator,Review recent events,Check network connections,Collect evidence,Recommend simulated isolation
+PLAYBOOK-003,Abnormal Medical Device Network Activity,Identify medical device,Verify destination,Check protocol,Review recent communication,Collect evidence,Recommend escalation
