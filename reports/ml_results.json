@@ -1,0 +1,38 @@
+{
+  "experiment": "Synthetic SOC operational risk classification",
+  "label_definition": "Rule-generated benchmark label; not real-world or clinical ground truth",
+  "rows": 2998,
+  "train_rows": 2398,
+  "test_rows": 600,
+  "accuracy": 0.7317,
+  "precision_weighted": 0.7354,
+  "recall_weighted": 0.7317,
+  "f1_weighted": 0.7282,
+  "labels": [
+    "Low",
+    "Medium",
+    "High"
+  ],
+  "confusion_matrix": [
+    [
+      315,
+      69,
+      1
+    ],
+    [
+      59,
+      116,
+      5
+    ],
+    [
+      4,
+      23,
+      8
+    ]
+  ],
+  "class_distribution": {
+    "Low": 1921,
+    "Medium": 901,
+    "High": 176
+  }
+}

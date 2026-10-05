@@ -1,0 +1,7 @@
+{
+  "events_processed": 250,
+  "event_processing_total_ms": 2.269,
+  "ml_first_prediction_ms": 692.627,
+  "ml_repeated_prediction_avg_ms": 50.632,
+  "note": "Local synthetic benchmark; hardware/package dependent; not a production SLA."
+}
