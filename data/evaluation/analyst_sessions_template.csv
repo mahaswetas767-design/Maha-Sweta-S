@@ -1,9 +1,3 @@
-session_id,analyst_type,scenario_id,assistant_used,procedure_adherence_pct,missed_steps,evidence_completeness_pct,decision_accuracy_pct,investigation_time_sec,critical_errors,notes
-S001,Novice,SCN-001,No,,,,,,,
-S002,Novice,SCN-001,Yes,,,,,,,
-S003,Experienced,SCN-001,No,,,,,,,
-S004,Experienced,SCN-001,Yes,,,,,,,
-S005,Novice,SCN-002,No,,,,,,,
-S006,Novice,SCN-002,Yes,,,,,,,
-S007,Experienced,SCN-002,No,,,,,,,
-S008,Experienced,SCN-002,Yes,,,,,,,
+session_id,analyst_group,procedure_adherence_pct,evidence_completeness_pct,decision_accuracy_pct,critical_error_rate_pct,investigation_time_min,notes
+S001,novice,,,,,,Fill with measured study data
+S002,experienced,,,,,,Fill with measured study data

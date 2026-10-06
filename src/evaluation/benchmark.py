@@ -1,35 +1,33 @@
-"""Measure local synthetic event-processing and ML prediction latency."""
-from pathlib import Path
-import json, time
-import pandas as pd
-from src.engine.event_processor import EventProcessor
-from src.ml.predict_risk import predict
+from __future__ import annotations
+from typing import Dict, Any, List
+from .metrics import summarize_sessions, time_reduction_percent
 
-ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "data" / "cleaned" / "hospital_soc_events_cleaned.csv"
-OUT = ROOT / "reports" / "performance_results.json"
+TARGETS = {
+    "procedure_adherence_pct": 90.0,
+    "evidence_completeness_pct": 85.0,
+    "critical_error_rate_pct_max": 5.0,
+    "time_reduction_pct": 20.0,
+}
 
-def main():
-    df = pd.read_csv(DATA).head(250)
-    processor = EventProcessor()
-    t0 = time.perf_counter()
-    for row in df.to_dict("records"):
-        processor.ingest(row)
-    event_ms = (time.perf_counter() - t0) * 1000
-    sample = df.iloc[0].to_dict()
-    # Warm-up load happens on the first call; report it separately from a repeated prediction.
-    t1 = time.perf_counter(); predict(sample); first_ms = (time.perf_counter() - t1) * 1000
-    t2 = time.perf_counter();
-    for _ in range(20): predict(sample)
-    repeat_ms = (time.perf_counter() - t2) * 1000 / 20
-    result = {
-        "events_processed": int(len(df)),
-        "event_processing_total_ms": round(event_ms, 3),
-        "ml_first_prediction_ms": round(first_ms, 3),
-        "ml_repeated_prediction_avg_ms": round(repeat_ms, 3),
-        "note": "Local synthetic benchmark; hardware/package dependent; not a production SLA."
+def compare_baseline_and_assisted(
+    baseline_sessions: List[Dict[str, Any]],
+    assisted_sessions: List[Dict[str, Any]],
+) -> Dict[str, Any]:
+    baseline = summarize_sessions(baseline_sessions)
+    assisted = summarize_sessions(assisted_sessions)
+    reduction = time_reduction_percent(
+        baseline["avg_investigation_time_min"],
+        assisted["avg_investigation_time_min"],
+    )
+    return {
+        "baseline": baseline,
+        "assisted": assisted,
+        "time_reduction_pct": reduction,
+        "target_status": {
+            "procedure_adherence": assisted["procedure_adherence_pct"] >= TARGETS["procedure_adherence_pct"],
+            "evidence_completeness": assisted["evidence_completeness_pct"] >= TARGETS["evidence_completeness_pct"],
+            "critical_error_rate": assisted["critical_error_rate_pct"] <= TARGETS["critical_error_rate_pct_max"],
+            "time_reduction": reduction >= TARGETS["time_reduction_pct"],
+        },
+        "note": "Simulated/template evaluation only. Replace with measured analyst study data before claiming effectiveness.",
     }
-    OUT.write_text(json.dumps(result, indent=2))
-    print(json.dumps(result, indent=2))
-
-if __name__ == "__main__": main()
